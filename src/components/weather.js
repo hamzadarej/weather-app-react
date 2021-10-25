@@ -26,7 +26,7 @@ const Weather = () => {
  
   useEffect(() => {
     getWeather(userInput);
-  }, [])
+  })
 
   const direction = weatherData?.wind?.deg;
   const windD = [
