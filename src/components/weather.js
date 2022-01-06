@@ -41,7 +41,7 @@ const Weather = () => {
 
   useEffect(() => {
     //default city
-    getWeather(userInput)
+    getWeather("spain")
     setWeatherData(JSON.parse(localStorage.getItem("weather")))
   }, []);
   //console.log(weatherData);
