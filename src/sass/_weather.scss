@@ -2,10 +2,24 @@
   display: flex;
   flex-direction: column;
   height: 100vh;
-  background: rgb(128, 75, 168);
   width: 100vw;
+  background-size: cover;
+  background-repeat: no-repeat;
   //overflow: hidden;
+  color: black;
   border: #df8e00 1px solid;
+}
+.Clear{
+  background-image:url(../images/Clear.jpg); 
+}
+.Clouds{
+  background-image:url(../images/Cloudy.jpeg); 
+}
+.Rain{
+  background-image:url(../images/Rain.jpg); 
+}
+.Snow{
+  background-image:url(../images/snow.jpg); 
 }
 
 form {

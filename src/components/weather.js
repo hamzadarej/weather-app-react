@@ -1,32 +1,29 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 
 import keys from "../config";
 const Weather = () => {
   const baseUrl = "https://api.openweathermap.org/data/2.5/";
 
-  const [userInput, setUserInput] = useState("berlin");
-  const [weatherData, setWeatherData] = useState({});
+  const [userInput, setUserInput] = useState("leipzig");
+  const [weatherData, setWeatherData] = useState();
   const getWeather = (endpoint) => {
     axios
       .get(`${baseUrl}weather?q=${endpoint}&units=metric&appid=${keys.apiKey}`)
-      .then((weather) => setWeatherData(weather.data))
-
+      .then((weather) =>
+        localStorage.setItem("weather", JSON.stringify(weather.data))
+      )
       .catch((err) => console.log("Please type an existing city name"));
-  };
-
-  const changeHandle = (e) => {
-    setUserInput(e.target.value);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setTimeout(() => {
+      setWeatherData(JSON.parse(localStorage.getItem("weather")))
+    }, 2000);
+
     getWeather(userInput);
   };
- 
-  useEffect(() => {
-    getWeather(userInput);
-  })
 
   const direction = weatherData?.wind?.deg;
   const windD = [
@@ -42,6 +39,11 @@ const Weather = () => {
   );
   const windDirection = findDirection?.direction;
 
+  useEffect(() => {
+    //default city
+    setWeatherData(JSON.parse(localStorage.getItem("weather")))
+  }, []);
+  //console.log(weatherData);
   // the time
   const year = new Date();
   const getFullYear = year.getFullYear();
@@ -54,23 +56,18 @@ const Weather = () => {
   const getMonthName = () => {
     return year.toLocaleDateString("en-US", { month: "long" });
   };
-
+ //console.log(weatherData?.weather[0]?.main)
   return (
-    <div className="app-wrap">
+    <div className={`${weatherData?.weather[0]?.main}  app-wrap`}>
       <header>
-        <form>
+        <form onSubmit={handleSubmit}>
           <input
             type="text"
             value={userInput}
             placeholder="enter a city name"
-            onChange={changeHandle}
+            onChange={(e) => setUserInput(e.target.value)}
           />
-          <input
-            onClick={handleSubmit}
-            type="submit"
-            id="submit"
-            value="Search"
-          />
+          <input type="submit" id="submit" value="Search" />
         </form>
       </header>
       {weatherData?.main && (
