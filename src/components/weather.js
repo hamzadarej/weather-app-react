@@ -5,7 +5,7 @@ import keys from "../config";
 const Weather = () => {
   const baseUrl = "https://api.openweathermap.org/data/2.5/";
 
-  const [userInput, setUserInput] = useState("leipzig");
+  const [userInput, setUserInput] = useState("");
   const [weatherData, setWeatherData] = useState();
   const getWeather = (endpoint) => {
     axios
